@@ -3,7 +3,7 @@ SERVER_KEY = "AAAAVrlwM0E:APA91bEZvmwa5WryWHcOalb6wchxFpwimlmOoMymySufgJR7PdRQM7
 
 namespace :notificar do
     desc 'Envia pushs para os celulares, em "devices" é passado uma lista de deviceID do firebase separado por ESPACO'
-    task :clientes, [:devices] => [:environment] do |task, args|
+    task :clientes, [:devices, :title, :body] => [:environment] do |task, args|
         require 'fcm'
         puts "Iniciando envio dos pushs"
         fcm = FCM.new(SERVER_KEY)
@@ -13,8 +13,8 @@ namespace :notificar do
 
         options = { 
             "notification": {
-                "title": "Nova guia disponível para regulação",
-                "body": "Guia 2309 • IPE Saúde",
+                "title": args[:title],
+                "body": args[:body],
                 "sound": "default",
                 # "badge": '1'
             },
