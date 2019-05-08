@@ -3,7 +3,7 @@ SERVER_KEY = "AAAAVrlwM0E:APA91bEZvmwa5WryWHcOalb6wchxFpwimlmOoMymySufgJR7PdRQM7
 
 namespace :notificar do
     desc 'Envia pushs para os celulares, em "devices" é passado uma lista de deviceID do firebase separado por ESPACO'
-    task :clientes, [:devices, :title, :body] => [:environment] do |task, args|
+    task :clientes, [:title, :body, :devices] => [:environment] do |task, args|
         require 'fcm'
         puts "Iniciando envio dos pushs"
         fcm = FCM.new(SERVER_KEY)
@@ -16,7 +16,7 @@ namespace :notificar do
                 "title": args[:title],
                 "body": args[:body],
                 "sound": "default",
-                # "badge": '1'
+                "badge": '1'
             },
             # "data": {
             #     # "click_action": "FLUTTER_NOTIFICATION_CLICK",
